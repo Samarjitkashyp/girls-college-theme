@@ -75,4 +75,113 @@ function register_video_gallery_post_type() {
 }
 add_action('init', 'register_video_gallery_post_type');
 
+// Register ACF Fields for Video Gallery
+function register_video_gallery_fields() {
+    if (function_exists('acf_add_local_field_group')) {
+        acf_add_local_field_group(array(
+            'key' => 'group_video_gallery',
+            'title' => 'Video Gallery Fields',
+            'fields' => array(
+                array(
+                    'key' => 'field_video_type',
+                    'label' => 'Video Type',
+                    'name' => 'video_type',
+                    'type' => 'select',
+                    'choices' => array(
+                        'youtube' => 'YouTube',
+                        'facebook' => 'Facebook',
+                        'upload' => 'Upload Video'
+                    ),
+                    'required' => 1,
+                    'return_format' => 'value'
+                ),
+                array(
+                    'key' => 'field_youtube_link',
+                    'label' => 'YouTube Link',
+                    'name' => 'youtube_link',
+                    'type' => 'url',
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_video_type',
+                                'operator' => '==',
+                                'value' => 'youtube'
+                            )
+                        )
+                    )
+                ),
+                array(
+                    'key' => 'field_facebook_link',
+                    'label' => 'Facebook Link',
+                    'name' => 'facebook_link',
+                    'type' => 'url',
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_video_type',
+                                'operator' => '==',
+                                'value' => 'facebook'
+                            )
+                        )
+                    )
+                ),
+                array(
+                    'key' => 'field_upload_video',
+                    'label' => 'Upload Video',
+                    'name' => 'upload_video',
+                    'type' => 'file',
+                    'return_format' => 'url',
+                    'mime_types' => 'mp4,webm',
+                    'conditional_logic' => array(
+                        array(
+                            array(
+                                'field' => 'field_video_type',
+                                'operator' => '==',
+                                'value' => 'upload'
+                            )
+                        )
+                    )
+                ),
+                array(
+                    'key' => 'field_social_sharing',
+                    'label' => 'Enable Social Sharing',
+                    'name' => 'social_sharing',
+                    'type' => 'true_false',
+                    'ui' => 1,
+                    'default_value' => 1
+                ),
+                array(
+                    'key' => 'field_enable_comments',
+                    'label' => 'Enable Comments',
+                    'name' => 'enable_comments',
+                    'type' => 'true_false',
+                    'ui' => 1,
+                    'default_value' => 1
+                )
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'add-video-gallery'
+                    )
+                )
+            )
+        ));
+    }
+}
+add_action('acf/init', 'register_video_gallery_fields');
+
+// Function to increment video views
+function increment_video_views() {
+    if (is_singular('add-video-gallery')) {
+        $post_id = get_the_ID();
+        $views = get_post_meta($post_id, 'video_views', true);
+        $views = $views ? $views + 1 : 1;
+        update_post_meta($post_id, 'video_views', $views);
+    }
+}
+add_action('wp_head', 'increment_video_views');
+
 
