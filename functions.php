@@ -26,7 +26,7 @@ require_once get_template_directory() . '/inc/custom-mobile-menu.php';
 // Bootstrap 5 Nav Walker
 require_once get_template_directory() . '/inc/class-bootstrap-5-navwalker.php';
 
-
+// Testimonial Carosual
 function aocndigboi_owl_init_script() {
     ?>
     <script>
@@ -56,4 +56,23 @@ function aocndigboi_owl_init_script() {
     <?php
 }
 add_action( 'wp_footer', 'aocndigboi_owl_init_script');
+
+// Register Custom Post Type for Video Gallery
+// Make sure this is in your functions.php
+function register_video_gallery_post_type() {
+    register_post_type('add-video-gallery', array(
+        'labels' => array(
+            'name' => __('Video Gallery'),
+            'singular_name' => __('Video'),
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'rewrite' => array('slug' => 'video-gallery'),
+        'supports' => array('title', 'thumbnail', 'editor', 'comments'),
+        'show_in_rest' => true,
+        'menu_icon' => 'dashicons-video-alt3',
+    ));
+}
+add_action('init', 'register_video_gallery_post_type');
+
 

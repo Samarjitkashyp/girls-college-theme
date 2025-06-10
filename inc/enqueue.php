@@ -14,6 +14,8 @@
     wp_enqueue_style( 'aocndigboi-owl-carousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css', array(), '2.3.4' );
     wp_enqueue_style( 'aocndigboi-owl-theme', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css', array(), '2.3.4' );
     wp_enqueue_style( 'aocndigboi-swiper', 'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css', array(), '9.0.0' );
+    // Lightbox CSS
+    wp_enqueue_style('lightbox-css', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css', [], '2.11.4');
 
     // jQuery UI Datepicker Styles
     wp_enqueue_style( 'aocndigboi-jquery-ui', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(), '1.12.1' );
@@ -40,6 +42,9 @@
 
     // jQuery UI for Datepicker
     wp_enqueue_script( 'aocndigboi-jquery-ui', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', array('jquery'), '1.12.1', true );
+
+    // Lightbox JS
+    wp_enqueue_script('lightbox-js', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js', ['jquery'], '2.11.4', true);
 
     // Custom JS (your custom logic)
     wp_enqueue_script( 'aocndigboi-custom-js', get_template_directory_uri() . '/assets/js/custom.js', array('jquery'), $theme_version, true );
